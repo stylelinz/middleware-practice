@@ -4,8 +4,12 @@ const app = express()
 const port = 3000
 
 app.use((req, res, next) => {
-  const date = new Date().toLocaleString()
-  console.log(`${date} | ${req.method} from ${req.originalUrl}`)
+  const startTime = new Date()
+  const timeStr = startTime.toLocaleString()
+  res.on('finish', () => {
+    const finishTime = new Date()
+    console.log(`${timeStr} | ${req.method} from ${req.originalUrl} | total time: ${finishTime - startTime}ms`)
+  })
   next()
 })
 
